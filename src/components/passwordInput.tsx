@@ -1,4 +1,4 @@
-import { UserSubmitForm } from "@/types/login";
+import { SignUpData } from "@/types/login";
 import {
   InputGroup,
   Input,
@@ -11,21 +11,29 @@ import {
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-export default function PasswordInput() {
+interface PasswordInputProps {
+  isPasswordConfirmation?: boolean;
+}
+
+export function PasswordInput({ isPasswordConfirmation }: PasswordInputProps) {
   const [show, setShow] = useState(false);
   const {
     register,
     formState: { errors },
-  } = useFormContext<UserSubmitForm>();
+  } = useFormContext<SignUpData>();
+
+  const passwordKind = isPasswordConfirmation ? "confirmPassword" : "password";
 
   const handleClick = () => setShow(!show);
 
   return (
-    <FormControl isInvalid={!!errors.password}>
-      <FormLabel htmlFor="password">Senha</FormLabel>
+    <FormControl isInvalid={!!errors[passwordKind]}>
+      <FormLabel htmlFor={passwordKind}>
+        {isPasswordConfirmation ? "Confirme sua senha" : "Senha"}
+      </FormLabel>
       <InputGroup size="md">
         <Input
-          {...register("password")}
+          {...register(passwordKind)}
           pr="4.5rem"
           type={show ? "text" : "password"}
           placeholder="Insira sua senha"
@@ -36,7 +44,7 @@ export default function PasswordInput() {
           </Button>
         </InputRightElement>
       </InputGroup>
-      <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+      <FormErrorMessage>{errors[passwordKind]?.message}</FormErrorMessage>
     </FormControl>
   );
 }

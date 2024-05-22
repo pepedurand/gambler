@@ -1,9 +1,9 @@
 "use client";
 import { Flex } from "@chakra-ui/react";
-import { LoginForm } from "./components/loginForm";
+import { SignUpForm } from "./components/signUpForm";
 import Link from "next/link";
 
-export default function Login() {
+export default function SignUp() {
   return (
     <Flex
       flexDir="column"
@@ -11,11 +11,11 @@ export default function Login() {
       alignItems="center"
       style={{ minHeight: "100vh" }}
     >
-      <LoginForm />
+      <SignUpForm />
       <p style={{ marginTop: "20px" }}>
-        Não tem uma conta?{" "}
-        <Link style={{ color: "green" }} href="/criar-conta">
-          Registre-se
+        Já tem uma conta?{" "}
+        <Link style={{ color: "green" }} href="/entrar">
+          Entrar
         </Link>
       </p>
     </Flex>

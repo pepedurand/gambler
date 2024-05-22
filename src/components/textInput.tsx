@@ -1,4 +1,4 @@
-import { UserSubmitForm } from "@/types/login";
+import { SignUpData } from "@/types/login";
 import {
   Input,
   FormControl,
@@ -9,19 +9,15 @@ import { useFormContext } from "react-hook-form";
 
 interface TextInputProps {
   label: string;
-  name: "password" | "email";
+  name: "password" | "email" | "name" | "confirmPassword" | "birthDate";
   placeholder: string;
 }
 
-export default function TextInput({
-  label,
-  name,
-  placeholder,
-}: TextInputProps) {
+export function TextInput({ label, name, placeholder }: TextInputProps) {
   const {
     register,
     formState: { errors },
-  } = useFormContext<UserSubmitForm>();
+  } = useFormContext<SignUpData>();
   return (
     <FormControl isInvalid={!!errors[name]}>
       <FormLabel htmlFor={name}>{label}</FormLabel>
