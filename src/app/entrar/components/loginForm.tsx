@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, useToast } from "@chakra-ui/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginData, loginSchema } from "@/types/auth";
@@ -7,9 +7,11 @@ import { PasswordInput } from "@/components/passwordInput";
 import { loginUser } from "@/api/auth";
 import { redirect } from "next/navigation";
 import { useAuth } from "@/context/authContext";
+import { AuthError } from "firebase/auth";
 
 export function LoginForm() {
   const { isUserLoggedIn } = useAuth();
+  const toast = useToast();
 
   const methods = useForm<LoginData>({
     resolver: yupResolver(loginSchema),
@@ -19,6 +21,7 @@ export function LoginForm() {
   const {
     handleSubmit,
     formState: { isSubmitting },
+    setError,
   } = methods;
 
   if (isUserLoggedIn) {
@@ -29,7 +32,17 @@ export function LoginForm() {
     try {
       await loginUser(data);
     } catch (error) {
-      console.log(error, "deu ruim");
+      if ((error as AuthError).code === "auth/invalid-credential") {
+        return (
+          setError("email", { message: "Email ou senha inválidos." }),
+          setError("password", { message: "Email ou senha inválidos." })
+        );
+      }
+      return toast({
+        title: "Erro ao entrar na conta, tente novamente",
+        status: "error",
+        isClosable: true,
+      });
     }
   }
   return (
