@@ -1,4 +1,4 @@
-import { SignUpData } from "@/types/login";
+import { SignUpData } from "@/types/auth";
 import {
   InputGroup,
   Input,

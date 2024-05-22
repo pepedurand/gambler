@@ -1,12 +1,17 @@
 import { Box, Button, Flex } from "@chakra-ui/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SignUpData, signUpSchema } from "@/types/login";
+import { SignUpData, signUpSchema } from "@/types/auth";
 import { TextInput } from "@/components/textInput";
 import { PasswordInput } from "@/components/passwordInput";
 import { DateInput } from "@/components/dateInput";
+import { signUpUser } from "@/api/auth";
+import { useAuth } from "@/context/authContext";
+import { redirect } from "next/navigation";
 
 export function SignUpForm() {
+  const { isUserLoggedIn } = useAuth();
+
   const methods = useForm<SignUpData>({
     resolver: yupResolver(signUpSchema),
     mode: "onBlur",
@@ -14,12 +19,15 @@ export function SignUpForm() {
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
-  function onSubmit(data: any) {
-    console.log(errors);
-    console.log(data);
+  if (!isUserLoggedIn) {
+    return redirect("/");
+  }
+
+  async function onSubmit(data: SignUpData) {
+    await signUpUser(data);
   }
 
   return (
