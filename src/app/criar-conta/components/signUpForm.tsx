@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, Spinner } from "@chakra-ui/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpData, signUpSchema } from "@/types/auth";

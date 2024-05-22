@@ -6,7 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 const AuthContext = createContext({
   currentUser: null,
   isUserLoggedIn: false,
-  loading: false,
+  isLoading: false,
 });
 
 export function useAuth() {
@@ -16,7 +16,7 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function initilizaUser(user: any) {
     if (user) {
@@ -26,14 +26,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setCurrentUser(null);
       setIsUserLoggedIn(false);
     }
-    setLoading(false);
+    setIsLoading(false);
   }
 
   useEffect(() => {
     return onAuthStateChanged(auth, initilizaUser);
   }, []);
 
-  const value = { currentUser, isUserLoggedIn, loading };
+  const value = { currentUser, isUserLoggedIn, isLoading };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
