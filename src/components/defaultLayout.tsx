@@ -9,12 +9,12 @@ interface DefaultLayoutProps {
 }
 
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
-  const { isLoading: isLoadingAuth } = useAuth();
+  const { isLoading: isLoadingAuth, isUserLoggedIn } = useAuth();
   const { isLoading: isLoadingSubscription } = useSubscription();
 
   return (
     <Box style={{ minHeight: "100vh", minWidth: "100vw" }}>
-      {isLoadingAuth || isLoadingSubscription ? (
+      {isLoadingAuth || (isLoadingSubscription && isUserLoggedIn) ? (
         <Center style={{ minHeight: "100vh" }}>
           <Spinner thickness="4px" speed="0.65s" color="blue.500" size="xl" />
         </Center>

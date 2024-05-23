@@ -1,6 +1,7 @@
 "use client";
 import { useGetSubscriptionStatus } from "@/hooks/useGetSubscriptionStatus";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useAuth } from "./authContext";
 
 const SubscriptionContext = createContext({
   userHasAccess: false,
@@ -20,16 +21,17 @@ export function SubscriptionProvider({
   const [isLoading, setIsLoading] = useState(true);
   const { data: subscriptionStatus, isLoading: isLoadingApi } =
     useGetSubscriptionStatus();
+  const { isUserLoggedIn } = useAuth();
 
   useEffect(() => {
-    if (!isLoadingApi && subscriptionStatus) {
+    if (!isLoadingApi && subscriptionStatus && isUserLoggedIn) {
       if (subscriptionStatus.status === "active") {
         return setUserHasAccess(true), setIsLoading(false);
       }
       setUserHasAccess(false);
       setIsLoading(false);
     }
-  }, [isLoadingApi, subscriptionStatus]);
+  }, [isLoadingApi, subscriptionStatus, isUserLoggedIn]);
 
   const value = { userHasAccess, isLoading };
 

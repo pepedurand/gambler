@@ -6,16 +6,14 @@ import { Button } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  const { isUserLoggedIn, isLoading: isLoadingAuth } = useAuth();
-  const { userHasAccess, isLoading: isLoadingSubscription } = useSubscription();
-
-  const isLoading = isLoadingAuth || isLoadingSubscription;
+  const { isUserLoggedIn } = useAuth();
+  const { userHasAccess } = useSubscription();
 
   if (!isUserLoggedIn) {
     return redirect("/entrar");
   }
 
-  if (!userHasAccess) {
+  if (isUserLoggedIn && !userHasAccess) {
     return redirect("/assinar");
   }
 
