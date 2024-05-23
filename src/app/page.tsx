@@ -6,8 +6,10 @@ import { Button } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  const { isUserLoggedIn } = useAuth();
-  const { userHasAccess } = useSubscription();
+  const { isUserLoggedIn, isLoading: isLoadingAuth } = useAuth();
+  const { userHasAccess, isLoading: isLoadingSubscription } = useSubscription();
+
+  const isLoading = isLoadingAuth || isLoadingSubscription;
 
   if (!isUserLoggedIn) {
     return redirect("/entrar");
@@ -18,11 +20,7 @@ export default function Home() {
   }
 
   async function logout() {
-    try {
-      await signOutUser();
-    } catch (error) {
-      console.log(error, "deu ruim");
-    }
+    await signOutUser();
   }
 
   return (

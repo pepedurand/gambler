@@ -6,12 +6,9 @@ import { TextInput } from "@/components/textInput";
 import { PasswordInput } from "@/components/passwordInput";
 import { DateInput } from "@/components/dateInput";
 import { signUpUser } from "@/api/auth";
-import { useAuth } from "@/context/authContext";
-import { redirect } from "next/navigation";
 import { AuthError } from "firebase/auth";
 
 export function SignUpForm() {
-  const { isUserLoggedIn } = useAuth();
   const toast = useToast();
 
   const methods = useForm<SignUpData>({
@@ -24,10 +21,6 @@ export function SignUpForm() {
     formState: { isSubmitting },
     setError,
   } = methods;
-
-  if (isUserLoggedIn) {
-    return redirect("/");
-  }
 
   async function onSubmit(data: SignUpData) {
     try {

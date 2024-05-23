@@ -5,12 +5,9 @@ import { LoginData, loginSchema } from "@/types/auth";
 import { TextInput } from "@/components/textInput";
 import { PasswordInput } from "@/components/passwordInput";
 import { loginUser } from "@/api/auth";
-import { redirect } from "next/navigation";
-import { useAuth } from "@/context/authContext";
 import { AuthError } from "firebase/auth";
 
 export function LoginForm() {
-  const { isUserLoggedIn } = useAuth();
   const toast = useToast();
 
   const methods = useForm<LoginData>({
@@ -23,10 +20,6 @@ export function LoginForm() {
     formState: { isSubmitting },
     setError,
   } = methods;
-
-  if (isUserLoggedIn) {
-    return redirect("/");
-  }
 
   async function onSubmit(data: LoginData) {
     try {

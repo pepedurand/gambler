@@ -2,8 +2,16 @@
 import { Flex } from "@chakra-ui/react";
 import { LoginForm } from "./components/loginForm";
 import Link from "next/link";
+import { useAuth } from "@/context/authContext";
+import { redirect } from "next/navigation";
 
 export default function Login() {
+  const { isUserLoggedIn } = useAuth();
+
+  if (isUserLoggedIn) {
+    return redirect("/");
+  }
+
   return (
     <Flex
       flexDir="column"
