@@ -23,11 +23,13 @@ export function SubscriptionProvider({
 
   useEffect(() => {
     if (!isLoadingApi && subscriptionStatus) {
-      console.log(subscriptionStatus, "subscriptionStatus");
+      if (subscriptionStatus.status === "active") {
+        return setUserHasAccess(true), setIsLoading(false);
+      }
+      setUserHasAccess(false);
       setIsLoading(false);
     }
-    setIsLoading(false);
-  }, [isLoadingApi]);
+  }, [isLoadingApi, subscriptionStatus]);
 
   const value = { userHasAccess, isLoading };
 
