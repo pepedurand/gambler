@@ -21,7 +21,7 @@ export default function Login() {
     >
       <LoginForm />
       <p style={{ marginTop: "20px" }}>
-        Não tem uma conta?{" "}
+        Não tem uma conta?
         <Link style={{ color: "green" }} href="/criar-conta">
           Registre-se
         </Link>
