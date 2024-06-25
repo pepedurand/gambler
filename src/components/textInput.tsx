@@ -1,4 +1,5 @@
 import { SignUpData } from "@/types/auth";
+import { primaryColorHover } from "@/types/colors";
 import {
   Input,
   FormControl,
@@ -21,7 +22,13 @@ export function TextInput({ label, name, placeholder }: TextInputProps) {
   return (
     <FormControl isInvalid={!!errors[name]}>
       <FormLabel htmlFor={name}>{label}</FormLabel>
-      <Input {...register(name)} pr="4.5rem" placeholder={placeholder} />
+      <Input
+        variant="outline"
+        {...register(name)}
+        pr="4.5rem"
+        placeholder={placeholder}
+        height="50px"
+      />
       <FormErrorMessage>{errors[name]?.message}</FormErrorMessage>
     </FormControl>
   );

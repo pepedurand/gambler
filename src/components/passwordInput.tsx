@@ -1,4 +1,5 @@
 import { SignUpData } from "@/types/auth";
+import { primaryColor, primaryColorHover } from "@/types/colors";
 import {
   InputGroup,
   Input,
@@ -33,13 +34,23 @@ export function PasswordInput({ isPasswordConfirmation }: PasswordInputProps) {
       </FormLabel>
       <InputGroup size="md">
         <Input
+          variant="outline"
           {...register(passwordKind)}
           pr="4.5rem"
           type={show ? "text" : "password"}
           placeholder="Insira sua senha"
+          height="50px"
         />
         <InputRightElement width="4.5rem">
-          <Button h="1.75rem" size="sm" onClick={handleClick}>
+          <Button
+            backgroundColor={primaryColor}
+            color="#000"
+            h="1.75rem"
+            size="sm"
+            marginTop="10px"
+            marginRight="4px"
+            onClick={handleClick}
+          >
             {show ? "Esconder" : "Exibir"}
           </Button>
         </InputRightElement>

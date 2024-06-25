@@ -16,7 +16,13 @@ export function DateInput() {
   return (
     <FormControl isInvalid={!!errors.birthDate}>
       <FormLabel htmlFor="birthDate">Data de nascimento</FormLabel>
-      <Input {...register("birthDate")} pr="4.5rem" size="md" type="date" />
+      <Input
+        {...register("birthDate")}
+        height="50px"
+        pr="4.5rem"
+        size="md"
+        type="date"
+      />
       <FormErrorMessage>{errors.birthDate?.message}</FormErrorMessage>
     </FormControl>
   );

@@ -6,6 +6,7 @@ import { TextInput } from "@/components/textInput";
 import { PasswordInput } from "@/components/passwordInput";
 import { loginUser } from "@/api/auth";
 import { AuthError } from "firebase/auth";
+import { primaryColor } from "@/types/colors";
 
 export function LoginForm() {
   const toast = useToast();
@@ -50,7 +51,13 @@ export function LoginForm() {
             />
             <PasswordInput />
           </Flex>
-          <Button mt={4} isLoading={isSubmitting} type="submit">
+          <Button
+            backgroundColor={primaryColor}
+            color="#000"
+            mt={4}
+            isLoading={isSubmitting}
+            type="submit"
+          >
             Entrar
           </Button>
         </form>
