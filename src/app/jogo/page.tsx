@@ -1,5 +1,6 @@
 "use client";
 import { useAuth } from "@/context/authContext";
+import { Box } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
 
 export default function LightningRoulette() {
@@ -10,12 +11,12 @@ export default function LightningRoulette() {
   }
 
   return (
-    <>
+    <Box>
       <iframe
         width="1280px"
         height="1080px"
         src="https://live.leon.red/frontend/evo/r2/"
-      ></iframe>
-    </>
+      />
+    </Box>
   );
 }

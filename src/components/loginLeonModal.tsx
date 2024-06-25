@@ -1,3 +1,4 @@
+import { useLeonConfigContext } from "@/context/leonConfigContext";
 import {
   Button,
   Flex,
@@ -10,45 +11,95 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ModalButtonGroup from "./modalButtonGroup";
 
 export default function LoginLeonModal() {
   const [isOpen, setIsOpen] = useState(true);
+  const { completedFirstStep, completedSecondStep, completedThirdStep } =
+    useLeonConfigContext();
+
+  useEffect(() => {
+    localStorage.setItem("hasDoneLeonSetup", JSON.stringify(false));
+  }, []);
+
+  function finishConfig() {
+    setIsOpen(false);
+    localStorage.setItem("hasDoneLeonSetup", JSON.stringify(true));
+  }
 
   return (
     <>
       <Modal size="xl" isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
         <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
         <ModalContent>
-          <ModalHeader>Verifique seu login</ModalHeader>
+          <ModalHeader>Como receber os sinais corretamente!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Flex gap="12px" direction="column">
               <Text>
-                Para acessar os jogos corretamente, é necessário estar logado na
-                casa, caso não esteja você não conseguirá visualizar os jogos
-                corretamente.
+                Para acessar o jogo corretamente, siga COM ATENÇÃO os passos
+                abaixo.
               </Text>
               <Text>
-                Caso ainda não tenha se castratado, cadastre-se pelo botão
-                abaixo para garantir seu bônus.
+                Para cada item, você deve completar o passo anterior para
+                prosseguir. Caso tenha dúvidas, entre em contato com nosso
+                suporte.
               </Text>
+              <Text style={{ marginTop: "24px" }}>
+                1 - Logue na casa de apostas Leon, ou crie uma conta clicando no
+                botão abaixo.
+              </Text>
+              <ModalButtonGroup
+                leftButtonTitle="Clique para logar"
+                rightButtonTitle="Já loguei na casa"
+                rightButtonLoadingText="Aguardando login"
+                dispatchAction="SET_COMPLETED_FIRST_STEP"
+                isStepAble={true}
+                leftButtonDestiny="https://bit.ly/CorretoraConfiavelPortugal"
+              />
+              <Text style={{ marginTop: "24px" }}>
+                2 - Abra o jogo lighting roulette e espere carrega-lo
+                totalmente.
+              </Text>
+              <ModalButtonGroup
+                leftButtonTitle="Clique para abrir o jogo"
+                rightButtonTitle="Já abri o jogo"
+                rightButtonLoadingText="Aguardando o jogo"
+                dispatchAction="SET_COMPLETED_SECOND_STEP"
+                isStepAble={completedFirstStep}
+                leftButtonDestiny="https://leon84.casino/live-casino/evolution/play/lightning-roulette"
+              />
+              <Text style={{ marginTop: "24px" }}>
+                3 - Certifique-se de que seguiu todos os passos. E feche as
+                abas/janelas com a tela do jogo aberta.
+              </Text>
+              <ModalButtonGroup
+                leftButtonTitle="Já fechei tudo"
+                rightButtonTitle="Completar configuração"
+                rightButtonLoadingText="Aguardando"
+                dispatchAction="SET_COMPLETED_THIRD_STEP"
+                isStepAble={completedSecondStep}
+                isLastStep
+              />
             </Flex>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => setIsOpen(false)}>
-              Já estou logado na casa
-            </Button>
-            <Button variant="outline" colorScheme="red">
-              <Link
-                target="_blank"
-                href="https://bit.ly/CorretoraConfiavelPortugal"
+          <ModalFooter style={{ marginTop: "20px" }}>
+            <Flex width="100%" justify="center">
+              <Button
+                isLoading={
+                  !completedFirstStep ||
+                  !completedSecondStep ||
+                  !completedThirdStep
+                }
+                loadingText="Complete os passos para ganhar dinheiro"
+                colorScheme="blue"
+                mr={3}
+                onClick={finishConfig}
               >
-                Logar/Cadastrar na Leon
-              </Link>
-            </Button>
+                Começar a ganhar dinheiro!
+              </Button>
+            </Flex>
           </ModalFooter>
         </ModalContent>
       </Modal>

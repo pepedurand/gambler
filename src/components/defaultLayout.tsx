@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@/context/authContext";
 import { useSubscription } from "@/context/subscriptionContext";
-import { Box, Center, Spinner } from "@chakra-ui/react";
+import { Box, Center, Flex, Spinner } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 interface DefaultLayoutProps {
@@ -13,7 +13,11 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
   const { isLoading: isLoadingSubscription } = useSubscription();
 
   return (
-    <Box style={{ minHeight: "100vh", minWidth: "100vw" }}>
+    <Flex
+      align="center"
+      direction="column"
+      style={{ minHeight: "100vh", minWidth: "800px" }}
+    >
       {isLoadingAuth || (isLoadingSubscription && isUserLoggedIn) ? (
         <Center style={{ minHeight: "100vh" }}>
           <Spinner thickness="4px" speed="0.65s" color="blue.500" size="xl" />
@@ -21,6 +25,6 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
       ) : (
         children
       )}
-    </Box>
+    </Flex>
   );
 }
