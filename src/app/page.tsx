@@ -1,16 +1,38 @@
 "use client";
 import { signOutUser } from "@/api/auth";
 import ActionCard from "@/components/actionCard";
+import Header from "@/components/header";
 import LoginLeonModal from "@/components/loginLeonModal";
 import { useAuth } from "@/context/authContext";
 import { useSubscription } from "@/context/subscriptionContext";
-import { Box, Button, Flex, Heading } from "@chakra-ui/react";
-import Link from "next/link";
+import { Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import CasinoIcon from "@mui/icons-material/Casino";
+import DownloadIcon from "@mui/icons-material/Download";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import SchoolIcon from "@mui/icons-material/School";
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { isUserLoggedIn } = useAuth();
   const { userHasAccess } = useSubscription();
+  const [hasDoneLeonConfig, setHasDoneLeonConfig] = useState(false);
+
+  useEffect(() => {
+    const jsonLeonConfig = JSON.parse(
+      localStorage.getItem("hasDoneLeonSetup") as string
+    );
+    const timeDifference = Date.now() - jsonLeonConfig.dateSaved;
+    const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+    if (hoursDifference > 2) {
+      setHasDoneLeonConfig(false);
+    }
+
+    if (jsonLeonConfig.value === true) {
+      setHasDoneLeonConfig(true);
+    }
+  }, []);
 
   if (!isUserLoggedIn) {
     return redirect("/entrar");
@@ -20,32 +42,42 @@ export default function Home() {
     return redirect("/assinar");
   }
 
-  async function logout() {
-    await signOutUser();
-  }
-
-  const hasDoneLeonConfig = localStorage.getItem("hasDoneLeonSetup") === "true";
-
   return (
-    <Box padding="40px 0">
-      <Heading>Bem vindo ao Gambler AI.</Heading>
-      {!hasDoneLeonConfig && <LoginLeonModal />}
-      <Flex margin="40px 0" gap="12px">
-        <ActionCard
-          title="Jogar Lighting Roulette"
-          description="Jogue e recebe sinais com nossa tecnologia IA para lucrar muito."
-        />
-        <ActionCard
-          title="Como baixar o APP"
-          description="Acesse o Gambler AI direto da sua tela de início"
-        />
+    <Flex justify="center" direction="column" width="100vw">
+      <Header isHome />
+      <Flex justify="center" align="center" direction="column" width="auto">
+        <Heading size="md">Bem vindo ao Gambler AI.</Heading>
+        {!hasDoneLeonConfig && <LoginLeonModal />}
+        <SimpleGrid columns={{ base: 1 }} margin="40px 0" gap="12px">
+          <ActionCard
+            backgroundImage='url("/strategy-bg.png")'
+            title="Aprenda estretégias vencedoras"
+            icon={<SchoolIcon />}
+            onClickDestiny="/jogo"
+          />
+          <ActionCard
+            backgroundImage='url("/download-bg.png")'
+            title="Como baixar o APP"
+            icon={<DownloadIcon />}
+            onClickDestiny="/jogo"
+          />
+          <ActionCard
+            backgroundImage='url("/roulette-bg.png")'
+            onClickDestiny="/jogo"
+            title="Jogar Lighting Roulette"
+            icon={<CasinoIcon />}
+          />
+          <ActionCard
+            backgroundImage='url("/payment-bg.png")'
+            onClickDestiny="/jogo"
+            title="Gerenciar Assinatura"
+            icon={<PaymentsIcon />}
+          />
+        </SimpleGrid>
       </Flex>
-      <Button>
-        <Link href="/jogo" scroll={false}>
-          Acessar Jogo
-        </Link>
-      </Button>
-      <Button onClick={() => logout()}>Sair</Button>
-    </Box>
+      <Text margin="20px 40px" align="center">
+        © Gambler IA 2024 - Todos os direitos reservados
+      </Text>
+    </Flex>
   );
 }

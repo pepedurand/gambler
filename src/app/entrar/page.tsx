@@ -1,5 +1,5 @@
 "use client";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { LoginForm } from "./components/loginForm";
 import Link from "next/link";
 import { useAuth } from "@/context/authContext";
@@ -16,12 +16,14 @@ export default function Login() {
   return (
     <Flex
       flexDir="column"
-      justifyContent="center"
       alignItems="center"
+      justify="space-evenly"
+      gap="40px"
       style={{ height: "100vh", width: "100vw" }}
       backgroundImage='url("/bet-background.png")'
       backgroundSize="cover"
     >
+      <Image src="/logo.png" alt="Gambler AI" width="360px" />
       <LoginForm />
       <p style={{ marginTop: "20px" }}>
         Não tem uma conta?

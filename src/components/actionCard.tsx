@@ -1,27 +1,60 @@
-import { Card, CardHeader, Heading, CardBody, Text } from "@chakra-ui/react";
+import { primaryColor } from "@/types/colors";
+import { Card, Heading, Flex } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function ActionCard({
   title,
-  description,
+  icon,
+  backgroundImage,
+  onClickDestiny,
 }: {
   title: string;
-  description: string;
+  icon: JSX.Element;
+  backgroundImage: string;
+  onClickDestiny: string;
 }) {
+  const isMobile = window.innerWidth < 768;
+  const iconSize = isMobile ? 50 : 62;
+
   return (
-    <Card
-      style={{
-        borderRadius: "10px",
-        backdropFilter: "blur(5px)",
+    <motion.div
+      whileHover={{ scale: 1.04 }}
+      whileTap={{
+        scale: 0.8,
+        borderRadius: "100%",
       }}
-      width="200px"
-      height="200px"
     >
-      <CardHeader>
-        <Heading size="md">{title}</Heading>
-      </CardHeader>
-      <CardBody>
-        <Text>{description}</Text>
-      </CardBody>
-    </Card>
+      <Card
+        style={{
+          borderRadius: "10px",
+          backdropFilter: "blur(5px)",
+        }}
+        backgroundImage={backgroundImage}
+        backgroundSize="cover"
+        backgroundColor="#020202"
+        backgroundPosition="center"
+        width={isMobile ? "300px" : "800px"}
+        height={isMobile ? "120px" : "160px"}
+      >
+        <Link style={{ height: "100%" }} href={onClickDestiny} scroll={true}>
+          <Flex
+            height="100%"
+            padding="16px"
+            direction="row"
+            gap={isMobile ? "10px" : "20px"}
+            align="center"
+          >
+            {{
+              ...icon,
+              props: {
+                sx: { color: primaryColor, fontSize: iconSize },
+              },
+            }}
+            <Heading size={isMobile ? "md" : "lg"}>{title}</Heading>
+          </Flex>
+        </Link>
+      </Card>
+    </motion.div>
   );
 }

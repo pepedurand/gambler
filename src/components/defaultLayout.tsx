@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@/context/authContext";
 import { useSubscription } from "@/context/subscriptionContext";
-import { Box, Center, Flex, Spinner } from "@chakra-ui/react";
+import { Center, Flex, Spinner } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 interface DefaultLayoutProps {
@@ -17,7 +17,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
       align="center"
       direction="column"
       style={{ minHeight: "100vh", minWidth: "100vw" }}
-      background="linear-gradient(180deg, rgba(17,17,17,1) 0%, rgba(24,15,5,1) 100%)"
+      background="linear-gradient(120deg, #000 0%, #120E09 20%, #120E09 70%, #000 100%)"
     >
       {isLoadingAuth || (isLoadingSubscription && isUserLoggedIn) ? (
         <Center style={{ minHeight: "100vh", minWidth: "100vw" }}>

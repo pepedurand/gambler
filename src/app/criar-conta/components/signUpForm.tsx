@@ -7,6 +7,7 @@ import { PasswordInput } from "@/components/passwordInput";
 import { DateInput } from "@/components/dateInput";
 import { signUpUser } from "@/api/auth";
 import { AuthError } from "firebase/auth";
+import { primaryColor } from "@/types/colors";
 
 export function SignUpForm() {
   const toast = useToast();
@@ -56,8 +57,14 @@ export function SignUpForm() {
             <PasswordInput />
             <PasswordInput isPasswordConfirmation />
           </Flex>
-          <Button mt={4} isLoading={isSubmitting} type="submit">
-            Entrar
+          <Button
+            backgroundColor={primaryColor}
+            color="#000"
+            mt={4}
+            isLoading={isSubmitting}
+            type="submit"
+          >
+            Registrar
           </Button>
         </form>
       </FormProvider>

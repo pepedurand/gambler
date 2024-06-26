@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ModalButtonGroup from "./modalButtonGroup";
+import exp from "constants";
 
 export default function LoginLeonModal() {
   const [isOpen, setIsOpen] = useState(true);
@@ -20,12 +21,28 @@ export default function LoginLeonModal() {
     useLeonConfigContext();
 
   useEffect(() => {
-    localStorage.setItem("hasDoneLeonSetup", JSON.stringify(false));
+    const jsonLeonConfig = JSON.parse(
+      localStorage.getItem("hasDoneLeonSetup") as string
+    );
+    const timeDifference = Date.now() - jsonLeonConfig.dateSaved;
+    const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+    if (!localStorage.getItem("hasDoneLeonSetup") || hoursDifference > 2) {
+      localStorage.setItem(
+        "hasDoneLeonSetup",
+        JSON.stringify({ value: false, dateSaved: null })
+      );
+    }
   }, []);
 
   function finishConfig() {
     setIsOpen(false);
-    localStorage.setItem("hasDoneLeonSetup", JSON.stringify(true));
+    const dateSaved = Date.now();
+    const item = {
+      value: true,
+      dateSaved,
+    };
+    localStorage.setItem("hasDoneLeonSetup", JSON.stringify(item));
   }
 
   return (
