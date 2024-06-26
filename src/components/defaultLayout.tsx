@@ -1,6 +1,7 @@
 "use client";
 import { useAuth } from "@/context/authContext";
 import { useSubscription } from "@/context/subscriptionContext";
+import { primaryColor } from "@/types/colors";
 import { Center, Flex, Spinner } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
@@ -21,7 +22,12 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
     >
       {isLoadingAuth || (isLoadingSubscription && isUserLoggedIn) ? (
         <Center style={{ minHeight: "100vh", minWidth: "100vw" }}>
-          <Spinner thickness="4px" speed="0.65s" color="blue.500" size="xl" />
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            color={primaryColor}
+            size="xl"
+          />
         </Center>
       ) : (
         children

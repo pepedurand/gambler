@@ -4,7 +4,6 @@ import {
   Flex,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -13,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ModalButtonGroup from "./modalButtonGroup";
-import exp from "constants";
 
 export default function LoginLeonModal() {
   const [isOpen, setIsOpen] = useState(true);
@@ -21,13 +19,21 @@ export default function LoginLeonModal() {
     useLeonConfigContext();
 
   useEffect(() => {
-    const jsonLeonConfig = JSON.parse(
-      localStorage.getItem("hasDoneLeonSetup") as string
-    );
-    const timeDifference = Date.now() - jsonLeonConfig.dateSaved;
-    const hoursDifference = timeDifference / (1000 * 60 * 60);
+    if (localStorage.getItem("hasDoneLeonSetup")) {
+      const jsonLeonConfig = JSON.parse(
+        localStorage.getItem("hasDoneLeonSetup") as string
+      );
+      const timeDifference = Date.now() - jsonLeonConfig.dateSaved;
+      const hoursDifference = timeDifference / (1000 * 60 * 60);
+      if (!localStorage.getItem("hasDoneLeonSetup") || hoursDifference > 2) {
+        localStorage.setItem(
+          "hasDoneLeonSetup",
+          JSON.stringify({ value: false, dateSaved: null })
+        );
+      }
+    }
 
-    if (!localStorage.getItem("hasDoneLeonSetup") || hoursDifference > 2) {
+    if (!localStorage.getItem("hasDoneLeonSetup")) {
       localStorage.setItem(
         "hasDoneLeonSetup",
         JSON.stringify({ value: false, dateSaved: null })
@@ -49,9 +55,8 @@ export default function LoginLeonModal() {
     <>
       <Modal size="xl" isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
         <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
-        <ModalContent>
+        <ModalContent background="linear-gradient(120deg, #000 0%, #120E09 20%, #120E09 70%, #000 100%)">
           <ModalHeader>Como receber os sinais corretamente!</ModalHeader>
-          <ModalCloseButton />
           <ModalBody>
             <Flex gap="12px" direction="column">
               <Text>
@@ -70,7 +75,7 @@ export default function LoginLeonModal() {
               <ModalButtonGroup
                 leftButtonTitle="Clique para logar"
                 rightButtonTitle="Já loguei na casa"
-                rightButtonLoadingText="Aguardando login"
+                rightButtonLoadingText="Aguardando"
                 dispatchAction="SET_COMPLETED_FIRST_STEP"
                 isStepAble={true}
                 leftButtonDestiny="https://bit.ly/CorretoraConfiavelPortugal"
@@ -80,9 +85,9 @@ export default function LoginLeonModal() {
                 totalmente.
               </Text>
               <ModalButtonGroup
-                leftButtonTitle="Clique para abrir o jogo"
+                leftButtonTitle="Abrir o jogo"
                 rightButtonTitle="Já abri o jogo"
-                rightButtonLoadingText="Aguardando o jogo"
+                rightButtonLoadingText="Aguardando"
                 dispatchAction="SET_COMPLETED_SECOND_STEP"
                 isStepAble={completedFirstStep}
                 leftButtonDestiny="https://leon84.casino/live-casino/evolution/play/lightning-roulette"
@@ -93,7 +98,7 @@ export default function LoginLeonModal() {
               </Text>
               <ModalButtonGroup
                 leftButtonTitle="Já fechei tudo"
-                rightButtonTitle="Completar configuração"
+                rightButtonTitle="Completar"
                 rightButtonLoadingText="Aguardando"
                 dispatchAction="SET_COMPLETED_THIRD_STEP"
                 isStepAble={completedSecondStep}
@@ -109,7 +114,7 @@ export default function LoginLeonModal() {
                   !completedSecondStep ||
                   !completedThirdStep
                 }
-                loadingText="Complete os passos para ganhar dinheiro"
+                loadingText="Aguardando"
                 colorScheme="blue"
                 mr={3}
                 onClick={finishConfig}

@@ -19,13 +19,13 @@ export default function SignUp() {
       alignItems="center"
       justify="space-evenly"
       gap="40px"
-      style={{ height: "100vh", width: "100vw" }}
+      style={{ minHeight: "100vh", width: "100vw" }}
       backgroundImage='url("/bet-background.png")'
       backgroundSize="cover"
     >
       <Image src="/logo.png" alt="Gambler AI" width="360px" />
       <SignUpForm />
-      <p style={{ marginTop: "20px" }}>
+      <p style={{ marginBottom: "40px" }}>
         Já tem uma conta?
         <Link style={{ color: primaryColor, marginLeft: "4px" }} href="/entrar">
           Entrar

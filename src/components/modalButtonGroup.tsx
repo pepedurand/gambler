@@ -47,6 +47,7 @@ export default function ModalButtonGroup({
         backgroundColor={primaryColor}
         onClick={onLeftButtonClick}
         width="200px"
+        color="#000"
         _hover={{ backgroundColor: primaryColorHover }}
       >
         {leftButtonDestiny ? (

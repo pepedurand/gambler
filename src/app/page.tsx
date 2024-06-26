@@ -5,7 +5,7 @@ import Header from "@/components/header";
 import LoginLeonModal from "@/components/loginLeonModal";
 import { useAuth } from "@/context/authContext";
 import { useSubscription } from "@/context/subscriptionContext";
-import { Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, SimpleGrid, Text } from "@chakra-ui/react";
 import CasinoIcon from "@mui/icons-material/Casino";
 import DownloadIcon from "@mui/icons-material/Download";
 import PaymentsIcon from "@mui/icons-material/Payments";
@@ -64,7 +64,7 @@ export default function Home() {
           <ActionCard
             backgroundImage='url("/roulette-bg.png")'
             onClickDestiny="/jogo"
-            title="Jogar Lighting Roulette"
+            title="Jogar com sinais de IA"
             icon={<CasinoIcon />}
           />
           <ActionCard

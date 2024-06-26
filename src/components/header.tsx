@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   IconButton,
+  Image,
   Menu,
   MenuButton,
   MenuItem,
@@ -18,14 +19,21 @@ export default function Header({ isHome = false }) {
     await signOutUser();
   }
   return (
-    <Flex width="100%" padding="20px" justify="space-between">
+    <Flex
+      width="100%"
+      height="100px"
+      padding="20px"
+      align="center"
+      justify="space-between"
+    >
       {!isHome ? (
         <Link href="/">
-          <ArrowBackIcon sx={{ color: primaryColor, fontSize: 40 }} />
+          <ArrowBackIcon sx={{ color: primaryColor, fontSize: 30 }} />
         </Link>
       ) : (
         <Box></Box>
       )}
+      <Image src="/logo.png" alt="Gambler AI" width="200px" />
       <Menu>
         <MenuButton
           as={IconButton}
