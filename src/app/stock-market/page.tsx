@@ -1,5 +1,4 @@
 "use client";
-import GameSignal from "@/components/gameSignal";
 import Header from "@/components/header";
 import OpenGameModal from "@/components/openGameModal";
 import { useAuth } from "@/context/authContext";
@@ -16,9 +15,9 @@ import {
 } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
 
-const gameName = "LightningRoulette";
+const gameName = "StockMarket";
 
-export default function LightningRoulette() {
+export default function StockMarket() {
   const { isUserLoggedIn } = useAuth();
   const { isKeyValidated } = useValidateJsonKey(`hasDone${gameName}Setup`);
   if (!isUserLoggedIn) {
@@ -30,7 +29,32 @@ export default function LightningRoulette() {
       <Header />
       {!isKeyValidated && <OpenGameModal gameName={gameName} />}
       <Flex gap="40px" align="center" direction="column">
-        <GameSignal />
+        <Flex gap="12px" direction="column" align="center" justify="center">
+          <Flex gap="8px" align="center">
+            <Image
+              src="roulette-icon.png"
+              alt="Icone de roleta"
+              width="20px"
+              height="20px"
+            />
+            <Text>
+              <b>Stock Market</b>
+            </Text>
+          </Flex>
+          <Text>Assertividade</Text>
+          <CircularProgress
+            size="60px"
+            fill="transparent"
+            max={70}
+            value={40}
+            color={primaryColor}
+          >
+            <CircularProgressLabel>70%</CircularProgressLabel>
+          </CircularProgress>
+          <Button color={primaryColor} variant="outline">
+            Gerar sinal
+          </Button>
+        </Flex>
         <Center>
           <iframe
             style={{

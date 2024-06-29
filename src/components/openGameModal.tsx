@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ModalButtonGroup from "./modalButtonGroup";
-import { set } from "react-hook-form";
 
 export default function OpenGameModal({ gameName }: { gameName: string }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -52,7 +51,7 @@ export default function OpenGameModal({ gameName }: { gameName: string }) {
       setGameTitle("Stock Market");
       setGameUrl("https://leon84.casino/casino/evolution-rng/play/stockmarket");
     }
-    if (gameName === "Bacbo") {
+    if (gameName === "BacBo") {
       setGameTitle("Bac-Bo");
       setGameUrl("https://leon84.casino/live-casino/evolution/play/bac-bo");
     }

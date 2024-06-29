@@ -53,21 +53,20 @@ export default function Home() {
           />
           <ActionCard
             backgroundImage='url("/roulette-bg.png")'
-            onClickDestiny="/bacboo"
-            title="Jogar Bacboo"
+            onClickDestiny="/bacbo"
+            title="Jogar Bac Bo"
             icon={<CasinoIcon />}
           />
           <ActionCard
             backgroundImage='url("/roulette-bg.png")'
             onClickDestiny="/football-studio"
             title="Jogar Football Studio"
-            // https://leon84.casino/live-casino/evolution/play/top-card
             icon={<SportsSoccerIcon />}
           />
           <ActionCard
             backgroundImage='url("/roulette-bg.png")'
-            onClickDestiny="/market"
-            title="Jogar Market"
+            onClickDestiny="/stock-market"
+            title="Jogar Stock Market"
             icon={<CasinoIcon />}
           />
           <ActionCard
