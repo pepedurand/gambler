@@ -38,6 +38,7 @@ export default function GameSignal({
     setTimeLeft(60);
     setTimeout(() => {
       setIsLoading(false);
+      setAssertiveness(Math.floor(Math.random() * 40) + 60);
     }, 5000);
     const randomIndex = Math.floor(Math.random() * possibleSigns.length);
     return setAwnser(possibleSigns[randomIndex]);
@@ -50,12 +51,6 @@ export default function GameSignal({
   return (
     <Flex gap="12px" direction="column" align="center" justify="center">
       <Flex gap="8px" align="center">
-        {/* <Image
-          src="roulette-icon.png"
-          alt="Icone de roleta"
-          width="20px"
-          height="20px"
-        /> */}
         <Text>
           <b>{gameTitle}</b>
         </Text>
@@ -72,7 +67,15 @@ export default function GameSignal({
       </CircularProgress>
 
       {isLoading ? (
-        <Spinner thickness="4px" speed="0.65s" color={primaryColor} size="xl" />
+        <>
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            color={primaryColor}
+            size="xl"
+          />
+          <Text>Nossa IA está trabalhando para gerar o sinal...</Text>
+        </>
       ) : (
         <>
           <Text>Aposte em: {awnser}</Text>

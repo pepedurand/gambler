@@ -2,6 +2,7 @@
 import ActionCard from "@/components/actionCard";
 import Header from "@/components/header";
 import LoginLeonModal from "@/components/loginLeonModal";
+import RouletteIcon from "@/components/rouletteIcon";
 import { useAuth } from "@/context/authContext";
 import { useSubscription } from "@/context/subscriptionContext";
 import { useValidateJsonKey } from "@/hooks/useValidateJsonKey";
@@ -11,6 +12,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import SchoolIcon from "@mui/icons-material/School";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
+import CandlestickChartIcon from "@mui/icons-material/CandlestickChart";
 import { redirect } from "next/navigation";
 
 export default function Home() {
@@ -49,25 +51,25 @@ export default function Home() {
             backgroundImage='url("/roulette-bg.png")'
             onClickDestiny="/lightning-roulette"
             title="Jogar Lightning Roulette"
-            icon={<CasinoIcon />}
+            icon={<RouletteIcon />}
           />
           <ActionCard
-            backgroundImage='url("/roulette-bg.png")'
+            backgroundImage='url("/bac-bo-bg.png")'
             onClickDestiny="/bacbo"
             title="Jogar Bac Bo"
             icon={<CasinoIcon />}
           />
           <ActionCard
-            backgroundImage='url("/roulette-bg.png")'
+            backgroundImage='url("/football-studio-bg.png")'
             onClickDestiny="/football-studio"
             title="Jogar Football Studio"
             icon={<SportsSoccerIcon />}
           />
           <ActionCard
-            backgroundImage='url("/roulette-bg.png")'
+            backgroundImage='url("/stock-market-bg.png")'
             onClickDestiny="/stock-market"
             title="Jogar Stock Market"
-            icon={<CasinoIcon />}
+            icon={<CandlestickChartIcon />}
           />
           <ActionCard
             backgroundImage='url("/payment-bg.png")'

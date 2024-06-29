@@ -25,8 +25,8 @@ export default function OpenGameModal({ gameName }: { gameName: string }) {
         localStorage.getItem(jsonKey) as string
       );
       const timeDifference = Date.now() - jsonLeonConfig.dateSaved;
-      const hoursDifference = timeDifference / (1000 * 60 * 60);
-      if (!localStorage.getItem(jsonKey) || hoursDifference > 2) {
+      const minutesDifference = timeDifference / (1000 * 60);
+      if (!localStorage.getItem(jsonKey) || minutesDifference > 30) {
         localStorage.setItem(
           jsonKey,
           JSON.stringify({ value: false, dateSaved: null })
@@ -71,6 +71,7 @@ export default function OpenGameModal({ gameName }: { gameName: string }) {
       dateSaved,
     };
     localStorage.setItem(jsonKey, JSON.stringify(item));
+    window.location.reload();
   }
 
   return (
