@@ -1,4 +1,3 @@
-import { useLeonConfigDispatch } from "@/context/leonConfigContext";
 import { primaryColor, primaryColorHover } from "@/types/colors";
 import { Flex, Button } from "@chakra-ui/react";
 import Link from "next/link";
@@ -8,7 +7,6 @@ export default function ModalButtonGroup({
   leftButtonTitle,
   rightButtonTitle,
   rightButtonLoadingText,
-  isStepAble,
   leftButtonDestiny,
   isLastStep,
   onRightButtonFunction,
@@ -16,7 +14,6 @@ export default function ModalButtonGroup({
   leftButtonTitle: string;
   rightButtonTitle: string;
   rightButtonLoadingText: string;
-  isStepAble?: boolean;
   leftButtonDestiny?: string;
   isLastStep?: boolean;
   onRightButtonFunction?: () => void;

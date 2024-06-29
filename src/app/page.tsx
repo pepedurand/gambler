@@ -5,7 +5,7 @@ import LoginLeonModal from "@/components/loginLeonModal";
 import { useAuth } from "@/context/authContext";
 import { useSubscription } from "@/context/subscriptionContext";
 import { useValidateJsonKey } from "@/hooks/useValidateJsonKey";
-import { Flex, Heading, Image, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 import CasinoIcon from "@mui/icons-material/Casino";
 import DownloadIcon from "@mui/icons-material/Download";
 import PaymentsIcon from "@mui/icons-material/Payments";

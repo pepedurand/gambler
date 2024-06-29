@@ -1,5 +1,5 @@
 import { SignUpData } from "@/types/auth";
-import { primaryColor, primaryColorHover } from "@/types/colors";
+import { primaryColor } from "@/types/colors";
 import {
   InputGroup,
   Input,

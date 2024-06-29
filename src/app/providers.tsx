@@ -1,6 +1,5 @@
 "use client";
 import { AuthProvider } from "@/context/authContext";
-import { LeonConfigProvider } from "@/context/leonConfigContext";
 import { SubscriptionProvider } from "@/context/subscriptionContext";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -14,9 +13,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <ColorModeScript initialColorMode="dark" />
       <ChakraProvider>
         <AuthProvider>
-          <SubscriptionProvider>
-            <LeonConfigProvider>{children}</LeonConfigProvider>
-          </SubscriptionProvider>
+          <SubscriptionProvider>{children}</SubscriptionProvider>
         </AuthProvider>
       </ChakraProvider>
     </QueryClientProvider>
