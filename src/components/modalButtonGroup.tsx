@@ -10,25 +10,23 @@ export default function ModalButtonGroup({
   rightButtonLoadingText,
   isStepAble,
   leftButtonDestiny,
-  dispatchAction,
   isLastStep,
+  onRightButtonFunction,
 }: {
   leftButtonTitle: string;
   rightButtonTitle: string;
   rightButtonLoadingText: string;
-  isStepAble: boolean;
+  isStepAble?: boolean;
   leftButtonDestiny?: string;
-  dispatchAction:
-    | "SET_COMPLETED_FIRST_STEP"
-    | "SET_COMPLETED_SECOND_STEP"
-    | "SET_COMPLETED_THIRD_STEP"
-    | "SET_HAS_DONE_ALL_STEPS";
   isLastStep?: boolean;
+  onRightButtonFunction?: () => void;
 }) {
-  const { dispatch } = useLeonConfigDispatch();
   const [isRightButtonLoading, setIsRightButtonLoading] = useState(true);
+  const [completed, setCompleted] = useState(false);
+  const [hasClickedLeftButton, setHasClickedLeftButton] = useState(false);
 
   function onLeftButtonClick() {
+    setHasClickedLeftButton(true);
     isLastStep
       ? setIsRightButtonLoading(false)
       : setTimeout(() => {
@@ -37,31 +35,42 @@ export default function ModalButtonGroup({
   }
 
   function onRightButtonClick() {
-    dispatch({ type: dispatchAction, payload: true });
+    setCompleted(true);
+    if (onRightButtonFunction) {
+      onRightButtonFunction();
+    }
   }
 
   return (
     <Flex justify="center" gap="12px">
-      <Button
-        isDisabled={!isStepAble}
-        backgroundColor={primaryColor}
-        onClick={onLeftButtonClick}
-        width="200px"
-        color="#000"
-        _hover={{ backgroundColor: primaryColorHover }}
-      >
-        {leftButtonDestiny ? (
-          <Link target="_blank" href={leftButtonDestiny}>
+      {leftButtonDestiny ? (
+        <Link target="_blank" href={leftButtonDestiny}>
+          <Button
+            backgroundColor={primaryColor}
+            onClick={onLeftButtonClick}
+            width="200px"
+            color="#000"
+            _hover={{ backgroundColor: primaryColorHover }}
+          >
             {leftButtonTitle}
-          </Link>
-        ) : (
-          <>{leftButtonTitle}</>
-        )}
-      </Button>
+          </Button>
+        </Link>
+      ) : (
+        <Button
+          isDisabled={!completed}
+          backgroundColor={primaryColor}
+          onClick={onLeftButtonClick}
+          width="200px"
+          color="#000"
+          _hover={{ backgroundColor: primaryColorHover }}
+        >
+          {leftButtonTitle}
+        </Button>
+      )}
       <Button
         isLoading={isRightButtonLoading}
         loadingText={rightButtonLoadingText}
-        isDisabled={!isStepAble}
+        isDisabled={!hasClickedLeftButton}
         colorScheme="green"
         width="200px"
         onClick={onRightButtonClick}

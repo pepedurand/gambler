@@ -1,38 +1,22 @@
 "use client";
-import { signOutUser } from "@/api/auth";
 import ActionCard from "@/components/actionCard";
 import Header from "@/components/header";
 import LoginLeonModal from "@/components/loginLeonModal";
 import { useAuth } from "@/context/authContext";
 import { useSubscription } from "@/context/subscriptionContext";
+import { useValidateJsonKey } from "@/hooks/useValidateJsonKey";
 import { Flex, Heading, Image, SimpleGrid, Text } from "@chakra-ui/react";
 import CasinoIcon from "@mui/icons-material/Casino";
 import DownloadIcon from "@mui/icons-material/Download";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import SchoolIcon from "@mui/icons-material/School";
+import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
 
 export default function Home() {
   const { isUserLoggedIn } = useAuth();
   const { userHasAccess } = useSubscription();
-  const [hasDoneLeonConfig, setHasDoneLeonConfig] = useState(false);
-
-  useEffect(() => {
-    const jsonLeonConfig = JSON.parse(
-      localStorage.getItem("hasDoneLeonSetup") as string
-    );
-    const timeDifference = Date.now() - jsonLeonConfig.dateSaved;
-    const hoursDifference = timeDifference / (1000 * 60 * 60);
-
-    if (hoursDifference > 2) {
-      setHasDoneLeonConfig(false);
-    }
-
-    if (jsonLeonConfig.value === true) {
-      setHasDoneLeonConfig(true);
-    }
-  }, []);
+  const { isKeyValidated } = useValidateJsonKey("hasDoneLeonSetup");
 
   if (!isUserLoggedIn) {
     return redirect("/entrar");
@@ -47,8 +31,8 @@ export default function Home() {
       <Header isHome />
       <Flex justify="center" align="center" direction="column" width="auto">
         <Heading size="md">Bem vindo ao Gambler AI.</Heading>
-        {!hasDoneLeonConfig && <LoginLeonModal />}
-        <SimpleGrid columns={{ base: 1 }} margin="40px 0" gap="12px">
+        {!isKeyValidated && <LoginLeonModal />}
+        <Flex direction="column" margin="40px 0" gap="12px">
           <ActionCard
             backgroundImage='url("/strategy-bg.png")'
             title="Aprenda estretégias vencedoras"
@@ -63,8 +47,27 @@ export default function Home() {
           />
           <ActionCard
             backgroundImage='url("/roulette-bg.png")'
-            onClickDestiny="/jogo"
-            title="Jogar com sinais de IA"
+            onClickDestiny="/lightning-roulette"
+            title="Jogar Lightning Roulette"
+            icon={<CasinoIcon />}
+          />
+          <ActionCard
+            backgroundImage='url("/roulette-bg.png")'
+            onClickDestiny="/bacboo"
+            title="Jogar Bacboo"
+            icon={<CasinoIcon />}
+          />
+          <ActionCard
+            backgroundImage='url("/roulette-bg.png")'
+            onClickDestiny="/football-studio"
+            title="Jogar Football Studio"
+            // https://leon84.casino/live-casino/evolution/play/top-card
+            icon={<SportsSoccerIcon />}
+          />
+          <ActionCard
+            backgroundImage='url("/roulette-bg.png")'
+            onClickDestiny="/market"
+            title="Jogar Market"
             icon={<CasinoIcon />}
           />
           <ActionCard
@@ -73,7 +76,7 @@ export default function Home() {
             title="Gerenciar Assinatura"
             icon={<PaymentsIcon />}
           />
-        </SimpleGrid>
+        </Flex>
       </Flex>
       <Text margin="20px 40px" align="center">
         © Gambler IA 2024 - Todos os direitos reservados

@@ -1,43 +1,25 @@
 "use client";
 import Header from "@/components/header";
+import OpenGameModal from "@/components/openGameModal";
 import { useAuth } from "@/context/authContext";
+import { useValidateJsonKey } from "@/hooks/useValidateJsonKey";
 import { primaryColor } from "@/types/colors";
 import {
-  Box,
   Button,
   Center,
   CircularProgress,
   CircularProgressLabel,
   Flex,
-  Heading,
   Image,
-  Step,
-  StepDescription,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
-  Stepper,
   Text,
-  useSteps,
 } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
 
+const gameName = "LightningRoulette";
+
 export default function LightningRoulette() {
   const { isUserLoggedIn } = useAuth();
-  const steps = [
-    { title: "First", description: "Contact Info" },
-    { title: "Second", description: "Date & Time" },
-    { title: "Third", description: "Select Rooms" },
-  ];
-
-  const { activeStep } = useSteps({
-    index: 1,
-    count: steps.length,
-  });
-
+  const { isKeyValidated } = useValidateJsonKey(`hasDone${gameName}Setup`);
   if (!isUserLoggedIn) {
     return redirect("/entrar");
   }
@@ -45,33 +27,8 @@ export default function LightningRoulette() {
   return (
     <Flex justify="center" direction="column" width="100vw">
       <Header />
+      {!isKeyValidated && <OpenGameModal gameName={gameName} />}
       <Flex gap="40px" align="center" direction="column">
-        {/* <Stepper
-          index={activeStep}
-          orientation="vertical"
-          height="200px"
-          gap="0"
-          color={primaryColor}
-        >
-          {steps.map((step, index) => (
-            <Step key={index}>
-              <StepIndicator borderColor={primaryColor}>
-                <StepStatus
-                  complete={<StepIcon />}
-                  incomplete={<StepNumber />}
-                  active={<StepNumber />}
-                />
-              </StepIndicator>
-
-              <Box flexShrink="0">
-                <StepTitle>{step.title}</StepTitle>
-                <StepDescription>{step.description}</StepDescription>
-              </Box>
-
-              <StepSeparator />
-            </Step>
-          ))}
-        </Stepper> */}
         <Flex gap="12px" direction="column" align="center" justify="center">
           <Flex gap="8px" align="center">
             <Image

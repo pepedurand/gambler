@@ -11,29 +11,55 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ModalButtonGroup from "./modalButtonGroup";
+import { set } from "react-hook-form";
 
-export default function LoginLeonModal() {
+export default function OpenGameModal({ gameName }: { gameName: string }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [gameTitle, setGameTitle] = useState("");
+  const [gameUrl, setGameUrl] = useState("");
+
+  const jsonKey = `hasDone${gameName}Setup`;
 
   useEffect(() => {
-    if (localStorage.getItem("hasDoneLeonSetup")) {
+    if (localStorage.getItem(jsonKey)) {
       const jsonLeonConfig = JSON.parse(
-        localStorage.getItem("hasDoneLeonSetup") as string
+        localStorage.getItem(jsonKey) as string
       );
       const timeDifference = Date.now() - jsonLeonConfig.dateSaved;
       const hoursDifference = timeDifference / (1000 * 60 * 60);
-      if (!localStorage.getItem("hasDoneLeonSetup") || hoursDifference > 2) {
+      if (!localStorage.getItem(jsonKey) || hoursDifference > 2) {
         localStorage.setItem(
-          "hasDoneLeonSetup",
+          jsonKey,
           JSON.stringify({ value: false, dateSaved: null })
         );
       }
     }
 
-    if (!localStorage.getItem("hasDoneLeonSetup")) {
+    if (!localStorage.getItem(jsonKey)) {
       localStorage.setItem(
-        "hasDoneLeonSetup",
+        jsonKey,
         JSON.stringify({ value: false, dateSaved: null })
+      );
+    }
+
+    if (gameName === "LightningRoulette") {
+      setGameTitle("Lightning Roulette");
+      setGameUrl(
+        "https://leon84.casino/live-casino/evolution/play/lightning-roulette"
+      );
+    }
+    if (gameName === "StockMarket") {
+      setGameTitle("Stock Market");
+      setGameUrl("https://leon84.casino/casino/evolution-rng/play/stockmarket");
+    }
+    if (gameName === "Bacbo") {
+      setGameTitle("Bac-Bo");
+      setGameUrl("https://leon84.casino/live-casino/evolution/play/bac-bo");
+    }
+    if (gameName === "FootballStudio") {
+      setGameTitle("Football Studio");
+      setGameUrl(
+        "https://leon84.casino/live-casino/evolution/play/football-studio-dice"
       );
     }
   }, []);
@@ -45,7 +71,7 @@ export default function LoginLeonModal() {
       value: true,
       dateSaved,
     };
-    localStorage.setItem("hasDoneLeonSetup", JSON.stringify(item));
+    localStorage.setItem(jsonKey, JSON.stringify(item));
   }
 
   return (
@@ -58,35 +84,32 @@ export default function LoginLeonModal() {
       >
         <ModalOverlay backdropFilter="blur(10px) hue-rotate(90deg)" />
         <ModalContent background="linear-gradient(120deg, #000 0%, #120E09 20%, #120E09 70%, #000 100%)">
-          <ModalHeader>Como receber os sinais corretamente!</ModalHeader>
+          <ModalHeader>
+            Como receber os sinais de {gameTitle} corretamente!
+          </ModalHeader>
           <ModalBody>
             <Flex gap="12px" direction="column">
               <Text>
-                Para acessar os sinais de jogos corretamente, leia com atenção
-                as informações abaixo.
+                Você precisa abrir o jogo o {gameTitle} e esperar carrega-lo
+                totalmente.
               </Text>
               <Text>
-                Você precisa criar a conta estritamente pelo link do botão
-                abaixo para que os sinais de jogos funcionem corretamente.
+                Assim que o jogo estiver carregado, clique no botão abaixo para
+                começar a receber os sinais.
               </Text>
               <Text fontWeight="600">
-                Atenção! Se você não criar a conta pelo link abaixo, os sinais
-                de jogos não funcionarão.
-              </Text>
-              <Text>
-                Caso já tenha criado uma conta na Leon pela Gambler, clique no
-                link e vá até a aba de login apenas.
+                Atenção! Se o jogo não for aberto e carregado totalmente, os
+                sinais não irão funcionar.
               </Text>
             </Flex>
           </ModalBody>
           <ModalFooter style={{ margin: "20px 0" }}>
             <Flex width="100%" justify="center">
               <ModalButtonGroup
-                leftButtonTitle="Entrar na Leon"
+                leftButtonTitle="Abrir o jogo"
                 rightButtonTitle="Ganhar dinheiro"
                 rightButtonLoadingText="Aguardando"
-                isStepAble={true}
-                leftButtonDestiny="https://bit.ly/CorretoraConfiavelPortugal"
+                leftButtonDestiny={gameUrl}
                 onRightButtonFunction={finishConfig}
               />
             </Flex>
