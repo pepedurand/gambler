@@ -45,7 +45,7 @@ export default function Home() {
             backgroundImage='url("/download-bg.png")'
             title="Como baixar o APP"
             icon={<DownloadIcon />}
-            onClickDestiny="/jogo"
+            onClickDestiny="/baixar-o-app"
           />
           <ActionCard
             backgroundImage='url("/roulette-bg.png")'

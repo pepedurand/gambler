@@ -20,6 +20,7 @@ export default function Subscribe() {
   }
 
   async function checkSubscriptionStatus() {
+    setSubscriptionStatus("loading");
     const email = currentUser?.email ?? null;
     const subResponse = await getSubscriptionStatus(email);
     setSubscriptionStatus(subResponse.status);
@@ -34,7 +35,9 @@ export default function Subscribe() {
     <Flex justify="center" align="center" direction="column" width="100vw">
       <Header />
       <Flex direction="column" gap="12px" align="center" justify="center">
-        {subscriptionStatus === "active" || subscriptionStatus === "loading" ? (
+        {subscriptionStatus === "active" ||
+        subscriptionStatus === "loading" ||
+        subscriptionStatus === "trialing" ? (
           <>
             {subscriptionStatusText[subscriptionStatus as SubscriptionStatus]}
           </>

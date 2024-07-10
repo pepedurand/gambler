@@ -27,7 +27,10 @@ export function SubscriptionProvider({
       const email = currentUser?.email ?? null;
       const subscriptionStatus = await getSubscriptionStatus(email);
 
-      if (subscriptionStatus.status === "active") {
+      if (
+        subscriptionStatus.status === "active" ||
+        subscriptionStatus.status === "trialing"
+      ) {
         return setUserHasAccess(true), setIsLoading(false);
       }
       setUserHasAccess(false), setIsLoading(false);

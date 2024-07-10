@@ -6,8 +6,8 @@ export default function VideoFrame({
   src,
   title,
 }: {
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   src: string;
   title: string;
 }) {
