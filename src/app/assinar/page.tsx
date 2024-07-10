@@ -44,7 +44,10 @@ export default function Subscribe() {
         ) : (
           <>
             {subscriptionStatusText[subscriptionStatus as SubscriptionStatus]}
-            <Link href={"https://buy.stripe.com/4gwfZkcNk2i69AQ3ce"}>
+            <Link
+              target="_blank"
+              href={"https://buy.stripe.com/4gwfZkcNk2i69AQ3ce"}
+            >
               <Button>Acessar a página de pagamentos</Button>
             </Link>
             <Button onClick={checkSubscriptionStatus}>

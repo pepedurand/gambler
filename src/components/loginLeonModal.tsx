@@ -85,7 +85,6 @@ export default function LoginLeonModal() {
                 leftButtonTitle="Entrar na Leon"
                 rightButtonTitle="Ganhar dinheiro"
                 rightButtonLoadingText="Aguardando"
-                isStepAble={true}
                 leftButtonDestiny="https://bit.ly/CorretoraConfiavelPortugal"
                 onRightButtonFunction={finishConfig}
               />
