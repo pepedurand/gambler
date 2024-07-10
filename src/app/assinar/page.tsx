@@ -1,27 +1,55 @@
 "use client";
-import { signOutUser } from "@/api/auth";
+import { getSubscriptionStatus } from "@/api/subscription";
+import Header from "@/components/header";
 import { useAuth } from "@/context/authContext";
-import { Button } from "@chakra-ui/react";
+import {
+  SubscriptionStatus,
+  subscriptionStatusText,
+} from "@/types/subscription";
+import { Button, Flex } from "@chakra-ui/react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Subscribe() {
-  const { isUserLoggedIn } = useAuth();
+  const { isUserLoggedIn, currentUser } = useAuth();
+  const [subscriptionStatus, setSubscriptionStatus] = useState("loading");
 
   if (!isUserLoggedIn) {
     return redirect("/entrar");
   }
 
-  async function logout() {
-    try {
-      await signOutUser();
-    } catch (error) {
-      console.log(error, "deu ruim");
-    }
+  async function checkSubscriptionStatus() {
+    const email = currentUser?.email ?? null;
+    const subResponse = await getSubscriptionStatus(email);
+    setSubscriptionStatus(subResponse.status);
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    checkSubscriptionStatus();
+  }, []);
+
   return (
-    <>
-      Subscription Page<Button onClick={() => logout()}>Sair</Button>
-    </>
+    <Flex justify="center" align="center" direction="column" width="100vw">
+      <Header />
+      <Flex direction="column" gap="12px" align="center" justify="center">
+        {subscriptionStatus === "active" || subscriptionStatus === "loading" ? (
+          <>
+            {subscriptionStatusText[subscriptionStatus as SubscriptionStatus]}
+          </>
+        ) : (
+          <>
+            {subscriptionStatusText[subscriptionStatus as SubscriptionStatus]}
+            <Link href={"https://buy.stripe.com/4gwfZkcNk2i69AQ3ce"}>
+              <Button>Acessar a página de pagamentos</Button>
+            </Link>
+            <Button onClick={checkSubscriptionStatus}>
+              Verificar pagamento
+            </Button>
+          </>
+        )}
+      </Flex>
+    </Flex>
   );
 }

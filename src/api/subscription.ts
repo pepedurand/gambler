@@ -1,3 +1,5 @@
+import { SubscriptionStatusResponse } from "@/types/subscription";
+
 export async function getSubscriptionStatus(
   userEmail: string | null
 ): Promise<SubscriptionStatusResponse> {

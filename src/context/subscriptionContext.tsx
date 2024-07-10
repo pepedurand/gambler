@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./authContext";
 import { getSubscriptionStatus } from "@/api/subscription";
+import { SubscriptionStatus } from "@/types/subscription";
 
 const SubscriptionContext = createContext({
   userHasAccess: false,
@@ -24,14 +25,14 @@ export function SubscriptionProvider({
   useEffect(() => {
     async function checkSubscriptionStatus() {
       const email = currentUser?.email ?? null;
-      // const subscriptionStatus = await getSubscriptionStatus(email);
-      const subscriptionStatus = true;
+      const subscriptionStatus = await getSubscriptionStatus(email);
 
-      if (subscriptionStatus) {
+      if (subscriptionStatus.status === "active") {
         return setUserHasAccess(true), setIsLoading(false);
       }
       setUserHasAccess(false), setIsLoading(false);
     }
+
     if (isUserLoggedIn) {
       checkSubscriptionStatus();
     }

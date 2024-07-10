@@ -39,7 +39,7 @@ export default function Home() {
             backgroundImage='url("/strategy-bg.png")'
             title="Aprenda estretégias vencedoras"
             icon={<SchoolIcon />}
-            onClickDestiny="/jogo"
+            onClickDestiny="/estrategias"
           />
           <ActionCard
             backgroundImage='url("/download-bg.png")'
@@ -73,7 +73,7 @@ export default function Home() {
           />
           <ActionCard
             backgroundImage='url("/payment-bg.png")'
-            onClickDestiny="/jogo"
+            onClickDestiny="/assinar"
             title="Gerenciar Assinatura"
             icon={<PaymentsIcon />}
           />
